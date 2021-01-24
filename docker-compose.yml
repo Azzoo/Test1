@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+    client-arrays-service:
+        build: ./client-arrays-service
+        container_name: client-arrays-service
+        volumes:
+            - "./client-arrays-service:/src/app"
+        working_dir: "/src/app"
+        command: npm start
+    log-service:
+        build: ./log-service
+        container_name: log-service
+        volumes:
+            - "./log-service:/src/app"
+        working_dir: "/src/app"
+        command: npm start
+    react-ui:
+        build: ./react-ui
+        container_name: react-ui
+        volumes:
+            - "./react-ui:/src/app"
+        working_dir: "/src/app"
+        command: npm start
