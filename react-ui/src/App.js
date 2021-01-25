@@ -26,13 +26,14 @@ function App() {
   socket.onmessage = message => {
     //In general case it is simplier to use text messages over socket
     //But this method faster for server and communication channel
+    /*
     const fr = new FileReader();
     fr.onload = () => {
-        const array = new Int16Array(fr.result);
-        console.log(array);
+        const array = new Uint32Array(fr.result);
         setResult(JSON.stringify(Array.from(array)));
     };
-    fr.readAsArrayBuffer(message.data);
+    fr.readAsArrayBuffer(message.data);*/
+    console.log(message.length);
   };
 
   function sendFunction(){
