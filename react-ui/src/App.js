@@ -1,17 +1,51 @@
 import './App.css';
 import React, { useState } from 'react';
 
+let socket = null;
+
 function App() {
-  const [result, setResult] = useState('no result');
+  const [result, setResult] = useState('waiting for connection');
   let param = 1;
+
+  if (!socket){
+    socket = new WebSocket('ws://localhost:3000');
+  }
+
+  socket.onopen = () => {
+    setResult("ready and connected");
+  };
+
+  socket.onclose = () => {
+    setResult("connection closed");
+  };
+
+  socket.onerror = () => {
+    setResult("communication error");
+  };
+
+  socket.onmessage = message => {
+    //In general case it is simplier to use text messages over socket
+    //But this method faster for server and communication channel
+    const fr = new FileReader();
+    fr.onload = () => {
+        const array = new Int16Array(fr.result);
+        console.log(array);
+        setResult(JSON.stringify(Array.from(array)));
+    };
+    fr.readAsArrayBuffer(message.data);
+  };
+
   function sendFunction(){
+    //The olf rest api usage
+    /*
     fetch("http://localhost:3000/post-number", {method: 'POST', body: param+""})
     .then((serviceResult)=>{
       return serviceResult.text()
     })
     .then((data)=>{
       setResult(data);
-    })
+    })*/
+    socket.send(param);
   }
   return (
     <div className="App">

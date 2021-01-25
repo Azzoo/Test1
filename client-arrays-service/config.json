@@ -1,1 +1,1 @@
-{ "logServicePath": "http://localhost:3001/log-info" }
+{ "logServicePath": "http://localhost:3001/log-info", "apiPort": 3000 }
